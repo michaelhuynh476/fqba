@@ -1,0 +1,21 @@
+* {
+    #Loader {
+        height: 30rem;
+        width: 30rem;
+        border-radius: 50%;
+        background: radial-gradient(#4f4e4e, transparent);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 100px 20 px rgba(0, 0, 0, 0.5) inset,
+        0 5px 250px 20 px rgb(130 130 130 / 32%);
+    }
+
+    #Loading-text {
+        position: absolute;
+        font-size: 2px;
+        color: #a2a2a2;
+        letter-spacing: 0.2rem;
+        font-weight: bold;
+        text-shadow: 0 0 20px #777777;
+    }
+}
