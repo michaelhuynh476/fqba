@@ -1,42 +1,62 @@
+// script.js
 
+// Create a map centered at a specific location and zoom level
+var map = L.map('map').setView([28.7041, -81.582], 7);
 
-var map = L.map('map').setView([27.9944024, -81.7602544], 7); // Set initial coordinates and zoom level
-
+// Add a tile layer (for example, OpenStreetMap tiles)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Load GeoJSON data and add it to the map
+
+// Load your GeoJSON data
 fetch('regions.geojson')
     .then(response => response.json())
     .then(data => {
+        // Add GeoJSON data to the map as a GeoJSON layer with custom styling
         L.geoJSON(data, {
-            style: function (feature) {
+            style: function(feature) {
+                // Determine the color based on the "REGION" property
+                var regionColor = getColorBasedOnRegion(feature.properties.REGION);
+                
+                // Return style options
                 return {
-                    fillColor: getColor(feature.properties.region),
-                    weight: 2,
-                    opacity: 1,
+                    fillColor: regionColor,
                     color: 'white',
-                    fillOpacity: 0.7
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
                 };
-            },
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup(feature.properties.region);
             }
         }).addTo(map);
     });
 
-// Define a color function based on the region
-function getColor(region) {
-    switch (region) {
-        case 'Region 1': return 'red';
-        case 'Region 2': return 'orange';
-        case 'Region 3': return 'yellow';
-        case 'Region 4': return 'green';
-        case 'Region 5': return 'blue';
-        case 'Region 6': return 'purple';
-        case 'Region 7': return 'pink';
-        case 'Region 8': return 'brown';
-        default: return 'gray';
-    }
+// Define a function to determine color based on the "REGION" property
+function getColorBasedOnRegion(regionValue) {
+    // Implement your logic to assign colors based on "REGION" property values
+    // Return a color code (e.g., '#FF0000' for red) for each region value
+switch(regionValue) {
+    case 1:
+        return '#FF0000'; // Red color for region 1
+    case 2:
+        return '#00FF00'; // Green color for region 2
+    case 3:
+        return '#0000FF'; // Blue color for region 3
+    case 4:
+        return '#FFFF00'; // Yellow color for region 4
+    case 5:
+        return '#FFFFFF'; // White color for region 5
+    case 6:
+        return '#A52A2A'; // Brown color for region 6
+    case 7:
+        return '#FFA500'; // Orange color for region 7
+    case 8:
+        return '#FFC0CB'; // Pink color for region 8
+    default:
+        return '#000000'; // Default color for unknown regions (black in this case)
 }
+
+}
+
+
+
