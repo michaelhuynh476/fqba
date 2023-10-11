@@ -13,7 +13,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 fetch('regions.geojson')
     .then(response => response.json())
     .then(data => {
-        // Add GeoJSON data to the map as a GeoJSON layer with custom styling
+        // Add GeoJSON data to the map as a GeoJSON layer with custom styling and popup content
         L.geoJSON(data, {
             style: function(feature) {
                 // Determine the color based on the "REGION" property
@@ -27,9 +27,15 @@ fetch('regions.geojson')
                     opacity: 1,
                     fillOpacity: 0.8
                 };
+            },
+            onEachFeature: function(feature, layer) {
+                // Bind a popup with the county and region information to each feature
+                var popupContent = "County: " + feature.properties.NAME + "<br>Region: " + feature.properties.REGION;
+                layer.bindPopup(popupContent);
             }
         }).addTo(map);
     });
+
 
 // Define a function to determine color based on the "REGION" property
 function getColorBasedOnRegion(regionValue) {
