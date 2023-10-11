@@ -9,6 +9,28 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+// Create a legend for the regions
+var legend = L.control({ position: 'bottomright' });
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML += '<b>Region Legend</b><br>';
+
+    // Define the legend colors and labels
+    var legendColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFFFFF', '#A52A2A', '#FFA500', '#FFC0CB'];
+    var legendLabels = ['Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5', 'Region 6', 'Region 7', 'Region 8'];
+
+    // Loop through the legendColors and create a label with the corresponding color
+    for (var i = 0; i < legendColors.length; i++) {
+        div.innerHTML += '<i style="background:' + legendColors[i] + '"></i> ' + legendLabels[i] + '<br>';
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+
 // Load your GeoJSON data
 fetch('regions.geojson')
     .then(response => response.json())
@@ -63,6 +85,3 @@ switch(regionValue) {
 }
 
 }
-
-
-

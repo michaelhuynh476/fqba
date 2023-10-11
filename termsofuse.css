@@ -69,6 +69,13 @@ a:hover {
     font-size: 15px;
 }
 
+.newsletter {
+    border: 2px solid red; /* Red border around the special link */
+    padding: 0px 10px; /* Padding inside the red box */
+    border-radius: 5px; /* Optional: Rounded corners for the red box */
+    margin-top: -2px; /* Move the text up by 2 pixels */
+}
+
 footer {
     background-color: #333;
     color: white;

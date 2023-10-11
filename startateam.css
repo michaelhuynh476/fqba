@@ -81,6 +81,21 @@ a:hover {
     width: 100%;
 }
 
+.legend {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+}
+
+
 footer {
     background-color: #333;
     color: white;
