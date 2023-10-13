@@ -81,6 +81,83 @@ a:hover {
     width: 100%;
 }
 
+.content-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .payment-block,
+    .rules-block {
+        width: 100%; /* Make blocks take full width on smaller screens */
+    }
+}
+
+
+
+.payment-block, .quizbowl-info, .start-team-info,
+.rules-block, .advancement-block{
+    width: 48%; /* Adjust the width as needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.rules-block {
+    background-color: white;
+}
+
+.register-button-container {
+    text-align: center;
+    margin-top: 40px; /* Increase the top margin for better spacing */
+}
+
+.register-button {
+    display: inline-block;
+    padding: 20px 40px; /* Increase padding for a larger button */
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px; /* Round the corners */
+    font-size: 24px; /* Increase font size */
+    font-weight: bold; /* Make the text bold */
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect */
+}
+
+.register-button:hover {
+    background-color: #45a049;
+}
+
+.container2 {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+.steps {
+    list-style: decimal inside;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+
 .legend {
     background-color: white;
     padding: 10px;
