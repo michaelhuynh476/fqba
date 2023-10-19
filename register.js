@@ -1,0 +1,117 @@
+// script.js
+
+// Create a map centered at a specific location and zoom level
+var map = L.map('map').setView([28.7041, -81.582], 7);
+
+// Add a tile layer (for example, OpenStreetMap tiles)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+
+// Create a legend for the regions
+var legend = L.control({ position: 'bottomright' });
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML += '<b>Region Legend</b><br>';
+
+    // Define the legend colors and labels
+    var legendColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FFFFFF', '#A52A2A', '#FFA500', '#FFC0CB'];
+    var legendLabels = ['Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5', 'Region 6', 'Region 7', 'Region 8'];
+
+    // Loop through the legendColors and create a label with the corresponding color
+    for (var i = 0; i < legendColors.length; i++) {
+        div.innerHTML += '<i style="background:' + legendColors[i] + '"></i> ' + legendLabels[i] + '<br>';
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+
+// Load your GeoJSON data
+fetch('regions.geojson')
+    .then(response => response.json())
+    .then(data => {
+        // Add GeoJSON data to the map as a GeoJSON layer with custom styling and popup content
+        L.geoJSON(data, {
+            style: function(feature) {
+                // Determine the color based on the "REGION" property
+                var regionColor = getColorBasedOnRegion(feature.properties.REGION);
+                
+                // Return style options
+                return {
+                    fillColor: regionColor,
+                    color: 'white',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                // Bind a popup with the county and region information to each feature
+                var popupContent = "County: " + feature.properties.NAME + "<br>Region: " + feature.properties.REGION;
+                layer.bindPopup(popupContent);
+            }
+        }).addTo(map);
+    });
+
+
+// Define a function to determine color based on the "REGION" property
+function getColorBasedOnRegion(regionValue) {
+    // Implement your logic to assign colors based on "REGION" property values
+    // Return a color code (e.g., '#FF0000' for red) for each region value
+switch(regionValue) {
+    case 1:
+        return '#FF0000'; // Red color for region 1
+    case 2:
+        return '#00FF00'; // Green color for region 2
+    case 3:
+        return '#0000FF'; // Blue color for region 3
+    case 4:
+        return '#FFFF00'; // Yellow color for region 4
+    case 5:
+        return '#FFFFFF'; // White color for region 5
+    case 6:
+        return '#A52A2A'; // Brown color for region 6
+    case 7:
+        return '#FFA500'; // Orange color for region 7
+    case 8:
+        return '#FFC0CB'; // Pink color for region 8
+    default:
+        return '#000000'; // Default color for unknown regions (black in this case)
+}
+
+}
+
+document.getElementById("registration-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+  
+    // Send data to Google Spreadsheet using Google Sheets API
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTh6h-MNGB5E3hUSpXgBUBAjADYLLQmxxJGTLaN2f6KnSNL-EixtC4P1XGTHZfESOE81hG-9WsBcn83/pubhtml', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      alert('Registration successful!');
+      // You can redirect the user to a thank you page or do something else here.
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Registration failed. Please try again later.');
+    });
+  });
+  
